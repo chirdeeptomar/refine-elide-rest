@@ -1,32 +1,6 @@
 import nock from "nock";
+import { ELIDE_REST_API_URL } from "../utils";
 
-nock("https://api.fake-rest.refine.dev:443", { encodedQueryParams: true })
-    .delete("/posts/1")
-    .reply(200, {}, [
-        "Server",
-        "nginx/1.17.10",
-        "Date",
-        "Tue, 30 Mar 2021 12:23:06 GMT",
-        "Content-Type",
-        "application/json; charset=utf-8",
-        "Content-Length",
-        "2",
-        "Connection",
-        "close",
-        "X-Powered-By",
-        "Express",
-        "Vary",
-        "Origin, Accept-Encoding",
-        "Access-Control-Allow-Credentials",
-        "true",
-        "Cache-Control",
-        "no-cache",
-        "Pragma",
-        "no-cache",
-        "Expires",
-        "-1",
-        "X-Content-Type-Options",
-        "nosniff",
-        "ETag",
-        'W/"2-vyGp6PvFo4RvsFtPoIWeCReyIC8"',
-    ]);
+nock(ELIDE_REST_API_URL, { encodedQueryParams: true })
+    .delete("/group/11ecbb46-6775-4c05-8c26-b53ca0164e1c")
+    .reply(204);

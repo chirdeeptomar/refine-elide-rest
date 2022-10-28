@@ -1,26 +1,23 @@
 import axios from "axios";
 import JsonServer from "../../src/index";
+import { ELIDE_REST_API_URL } from "../utils";
 import "./index.mock";
 
 
 axios.defaults.adapter = require("axios/lib/adapters/http");
 
-const ELIDE_REST_API_URL = 'http://localhost:8080/api/v1'
-
 describe("update", () => {
     it("correct response", async () => {
-        const response = await JsonServer(
-            ELIDE_REST_API_URL,
-            axios,
-        ).update({
-            resource: "group",
-            id: "1004",
-            variables: {
-                type: "group",
-                id: "1002",
-                attributes: { description: "Updated Repository Group" }
-            },
-        });
+        const response = await JsonServer(ELIDE_REST_API_URL, axios)
+            .update({
+                resource: "group",
+                id: "com.example.repository",
+                variables: {
+                    type: "group",
+                    id: "com.example.repository",
+                    attributes: { description: "Updated Repository Group" }
+                },
+            });
 
         const { data } = response;
 
@@ -28,18 +25,16 @@ describe("update", () => {
     });
 
     it("correct error response", async () => {
-        const response = await JsonServer(
-            ELIDE_REST_API_URL,
-            axios,
-        ).update({
-            resource: "group",
-            id: "1004",
-            variables: {
-                type: "group",
+        const response = await JsonServer(ELIDE_REST_API_URL, axios)
+            .update({
+                resource: "group",
                 id: "1004",
-                attributes: { description: "Updated Repository Group" }
-            },
-        });
+                variables: {
+                    type: "group",
+                    id: "1004",
+                    attributes: { description: "Updated Repository Group" }
+                },
+            });
 
         const { data } = response;
 

@@ -1,11 +1,10 @@
 import axios from "axios";
 import JsonServer from "../../src/index";
+import { ELIDE_REST_API_URL } from "../utils";
 import "./index.mock";
 
 
 axios.defaults.adapter = require("axios/lib/adapters/http");
-
-const ELIDE_REST_API_URL = 'http://localhost:8080/api/v1'
 
 describe("getMany", () => {
     it("correct response", async () => {

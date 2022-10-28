@@ -71,7 +71,7 @@ const generateFilter = (resource: string, filters?: CrudFilters) => {
 const JsonServer = (
     apiUrl: string,
     httpClient: AxiosInstance = axiosInstance,
-): DataProvider => ({
+): Omit<Required<DataProvider>, "updateMany" | "deleteMany"> => ({
     getList: async ({ resource, pagination, filters, sort }) => {
         const url = `${apiUrl}/${resource}`;
 
@@ -160,24 +160,6 @@ const JsonServer = (
             const err = error as AxiosError
             return { data: err.response?.data }
         }
-
-    },
-
-    updateMany: async ({ resource, ids, variables }) => {
-        const response = await Promise.all(
-            ids.map(async (id) => {
-                const { data } = await httpClient.patch(
-                    `${apiUrl}/${resource}/${id}`, { data: { ...variables } }, {
-                    headers: {
-                        "accept": "application/vnd.api+json",
-                        "content-type": "application/vnd.api+json"
-                    }
-                });
-                return data;
-            }),
-        );
-
-        return { data: response };
     },
 
     getOne: async ({ resource, id }) => {
@@ -186,87 +168,52 @@ const JsonServer = (
         const { data } = await httpClient.get(url);
 
         return {
-            data: data?.data,
+            data
         };
     },
 
-    deleteOne: async ({ resource, id, variables }) => {
+    deleteOne: async ({ resource, id }) => {
         const url = `${apiUrl}/${resource}/${id}`;
 
-        const { data } = await httpClient.delete(url, variables);
+        const { data } = await httpClient.delete(url);
 
         return {
-            data,
+            data
         };
-    },
-
-    deleteMany: async ({ resource, ids, variables }) => {
-        const response = await Promise.all(
-            ids.map(async (id) => {
-                const { data } = await httpClient.delete(
-                    `${apiUrl}/${resource}/${id}`,
-                    variables,
-                );
-                return data;
-            }),
-        );
-        return { data: response };
     },
 
     getApiUrl: () => {
         return apiUrl;
     },
 
-    // custom: async ({ url, method, filters, sort, payload, query, headers }) => {
-    //     let requestUrl = `${url}?`;
+    custom: async ({ url, method, filters, sort, payload, query, headers }) => {
 
-    //     if (sort) {
-    //         const generatedSort = generateSort(sort);
-    //         if (generatedSort) {
-    //             const { _sort, _order } = generatedSort;
-    //             const sortQuery = {
-    //                 _sort: _sort.join(","),
-    //                 _order: _order.join(","),
-    //             };
-    //             requestUrl = `${requestUrl}&${stringify(sortQuery)}`;
-    //         }
-    //     }
+        if (headers) {
+            httpClient.defaults.headers = {
+                ...httpClient.defaults.headers,
+                ...headers,
+            };
+        }
 
-    //     if (filters) {
-    //         const filterQuery = generateFilter(filters);
-    //         requestUrl = `${requestUrl}&${stringify(filterQuery)}`;
-    //     }
+        let axiosResponse;
+        switch (method) {
+            case "put":
+            case "post":
+            case "patch":
+                axiosResponse = httpClient[method](url, payload);
+                break;
+            case "delete":
+                axiosResponse = httpClient.delete(url);
+                break;
+            default:
+                axiosResponse = httpClient.get(url);
+                break;
+        }
 
-    //     if (query) {
-    //         requestUrl = `${requestUrl}&${stringify(query)}`;
-    //     }
+        const { data } = await axiosResponse;
 
-    //     if (headers) {
-    //         httpClient.defaults.headers = {
-    //             ...httpClient.defaults.headers,
-    //             ...headers,
-    //         };
-    //     }
-
-    //     let axiosResponse;
-    //     switch (method) {
-    //         case "put":
-    //         case "post":
-    //         case "patch":
-    //             axiosResponse = await httpClient[method](url, payload);
-    //             break;
-    //         case "delete":
-    //             axiosResponse = await httpClient.delete(url);
-    //             break;
-    //         default:
-    //             axiosResponse = await httpClient.get(requestUrl);
-    //             break;
-    //     }
-
-    //     const { data } = axiosResponse;
-
-    //     return Promise.resolve({ data });
-    // },
+        return { data };
+    },
 });
 
 export default JsonServer;
