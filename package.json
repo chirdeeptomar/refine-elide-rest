@@ -1,7 +1,7 @@
 {
   "name": "elide-simple-rest",
   "description": "Elide simple REST data provider for refine.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
