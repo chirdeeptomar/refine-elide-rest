@@ -13,11 +13,13 @@ describe("create", () => {
             .create({
                 resource: "group",
                 variables: {
-                    id: "3813d589-2514-4299-ad71-3d70de40f1d3",
-                    type: "group",
-                    attributes: {
-                        "commonName": "test-group",
-                        "description": "this is a test group"
+                    data: {
+                        id: "3813d589-2514-4299-ad71-3d70de40f1d3",
+                        type: "group",
+                        attributes: {
+                            "commonName": "test-group",
+                            "description": "this is a test group"
+                        }
                     }
                 },
             })

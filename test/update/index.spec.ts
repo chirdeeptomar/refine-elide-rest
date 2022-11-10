@@ -13,9 +13,11 @@ describe("update", () => {
                 resource: "group",
                 id: "com.example.repository",
                 variables: {
-                    type: "group",
-                    id: "com.example.repository",
-                    attributes: { description: "Updated Repository Group" }
+                    data: {
+                        type: "group",
+                        id: "com.example.repository",
+                        attributes: { description: "Updated Repository Group" }
+                    }
                 },
             });
 
@@ -30,9 +32,11 @@ describe("update", () => {
                 resource: "group",
                 id: "1004",
                 variables: {
-                    type: "group",
-                    id: "1004",
-                    attributes: { description: "Updated Repository Group" }
+                    data: {
+                        type: "group",
+                        id: "1004",
+                        attributes: { description: "Updated Repository Group" }
+                    }
                 },
             });
 
