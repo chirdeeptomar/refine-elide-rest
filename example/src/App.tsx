@@ -18,7 +18,7 @@ const App: React.FC = () => {
   return (
     <Refine
       routerProvider={routerProvider}
-      dataProvider={dataProvider("http://localhost:8080/api/v1")}
+      dataProvider={dataProvider("https://api.elide.refine.dev/v1")}
       Layout={Layout}
       ReadyPage={ReadyPage}
       notificationProvider={notificationProvider}
