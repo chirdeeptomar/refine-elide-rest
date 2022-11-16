@@ -22,6 +22,7 @@
   "author": "Chirdeep Tomar",
   "module": "dist/esm/index.js",
   "devDependencies": {
+    "@pankod/refine-core": "^3.18.0",
     "@esbuild-plugins/node-resolve": "^0.1.4",
     "@types/jest": "^27.5.1",
     "jest": "^27.5.1",
@@ -30,8 +31,10 @@
     "tslib": "^2.3.1",
     "tsup": "^5.11.13"
   },
+  "peerDependencies": {
+    "@pankod/refine-core": "^3.18.0"
+  },
   "dependencies": {
-    "@pankod/refine-core": "^3.18.0",
     "axios": "^0.27.2",
     "query-string": "^7.0.1"
   },
