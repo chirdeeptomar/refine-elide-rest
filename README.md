@@ -1,9 +1,6 @@
-<div><strong>refine</strong> is a <a href="https://reactjs.org/">React</a>-based framework for building internal tools, rapidly.</div>
-<br/>
+**refine** is a [React](https://react.dev/)-based framework for building internal tools, rapidly.
 
-<div><strong>Elide</strong> is a <a href="https://reactjs.org/">Java</a> library that lets you setup model driven GraphQL or JSON API web service with minimal effort.</div>
-<br/>
-
+**[Elide](https://elide.io/)** is Java library that lets you setup model driven GraphQL or JSON API web service with minimal effort.
 
 ## About
 
