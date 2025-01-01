@@ -1,7 +1,7 @@
 import {
     CrudFilters, CrudOperators, CrudSorting, DataProvider,
     HttpError
-} from "@pankod/refine-core";
+} from "@refinedev/core";
 import axios, { AxiosError, AxiosInstance } from "axios";
 
 const axiosInstance = axios.create();
@@ -49,7 +49,7 @@ const generateSort = (sort?: CrudSorting) => {
     return "";
 };
 
-const generateFilter = (resource: string, filters?: CrudFilters) => {
+const generateFilter = (filters?: CrudFilters) => {
 
     let queryFilters: string = '';
     if (filters) {
@@ -78,13 +78,13 @@ const JsonServer = (
     apiUrl: string,
     httpClient: AxiosInstance = axiosInstance,
 ): Omit<Required<DataProvider>, "updateMany" | "deleteMany"> => ({
-    getList: async ({ resource, pagination, filters, sort }) => {
+    getList: async ({ resource, pagination, filters, sorters }) => {
         const url = `${apiUrl}/${resource}`;
         // pagination
         const current = pagination?.current || 1;
         const pageSize = pagination?.pageSize || 10;
 
-        const queryFilters = generateFilter(resource, filters);
+        const queryFilters = generateFilter(filters);
 
         const query: {
             _start: number;
@@ -96,7 +96,7 @@ const JsonServer = (
             _end: current * pageSize,
         };
 
-        const generatedSort = generateSort(sort);
+        const generatedSort = generateSort(sorters);
 
         const page = `page[offset]=${query._start}&page[limit]=${pageSize}&page[totals]&${generatedSort}`
         const formedQuery = `${url}?${page}&${queryFilters}`
@@ -192,13 +192,23 @@ const JsonServer = (
         return apiUrl;
     },
 
-    custom: async ({ url, method, filters, sort, payload, query, headers }) => {
+    custom: async ({ url, method, filters, sorters, payload, query, headers }) => {
+        let requestUrl = `${url}?`;
 
-        if (headers) {
-            httpClient.defaults.headers = {
-                ...httpClient.defaults.headers,
-                ...headers,
-            };
+        if (sorters) {
+            const generatedSort = generateSort(sorters);
+            if (generatedSort) {
+                requestUrl = `${requestUrl}&${generatedSort})}`;
+            }
+        }
+
+        if (filters) {
+            const filterQuery = generateFilter(filters);
+            requestUrl = `${requestUrl}&${filterQuery}`;
+        }
+
+        if (query) {
+            requestUrl = `${requestUrl}&${query}`;
         }
 
         let axiosResponse;
@@ -206,7 +216,7 @@ const JsonServer = (
             case "put":
             case "post":
             case "patch":
-                axiosResponse = httpClient[method](url, payload);
+                axiosResponse = httpClient[method](url, payload, { headers });
                 break;
             case "delete":
                 axiosResponse = httpClient.delete(url);

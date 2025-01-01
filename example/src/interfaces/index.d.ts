@@ -34,7 +34,7 @@ export interface CategoryAttributes {
 }
 
 export interface CategoryRelationships {
-    posts: Relation[];
+    posts?: Relation[];
 }
 
 export interface Meta {

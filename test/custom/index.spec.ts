@@ -4,8 +4,6 @@ import JsonServer from "../../src/index";
 import { ELIDE_REST_API_URL } from "../utils";
 import "./index.mock";
 
-axios.defaults.adapter = require("axios/lib/adapters/http");
-
 describe("custom", () => {
 
     it("correct get response", async () => {

@@ -1,17 +1,15 @@
 import {
-    List,
-    Table,
-    useTable,
-    TextField,
-    FilterDropdown,
-    Select,
-    ShowButton,
-    EditButton,
-    Space,
-    useSelect,
     DeleteButton,
-} from "@pankod/refine-antd";
-import { useMany } from "@pankod/refine-core";
+    EditButton,
+    FilterDropdown,
+    List,
+    ShowButton,
+    TextField,
+    useSelect,
+    useTable,
+} from "@refinedev/antd";
+import { useMany } from "@refinedev/core";
+import { Select, Space, Table } from "antd";
 
 import { Category, Post } from "../../interfaces";
 
@@ -29,9 +27,11 @@ export const PostList: React.FC = () => {
         },
     });
 
+    console.log(categories)
+
     const { selectProps: categorySelectProps } = useSelect<Category>({
         resource: "category",
-        optionLabel: "attributes.title",
+        optionLabel: () => "attributes.title",
         optionValue: "id"
     });
 

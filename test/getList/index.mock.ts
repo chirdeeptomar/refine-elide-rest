@@ -58,7 +58,7 @@ nock(ELIDE_REST_API_URL)
         }
     );
 
-nock("http://localhost:8080/api/v1")
+nock(ELIDE_REST_API_URL)
     .get("/group?page[offset]=0&page[limit]=10&page[totals]&sort=id,&")
     .reply(
         200,
@@ -115,7 +115,7 @@ nock("http://localhost:8080/api/v1")
         }
     );
 
-nock("http://localhost:8080/api/v1")
+nock(ELIDE_REST_API_URL)
     .get("/group?page[offset]=0&page[limit]=10&page[totals]&sort=-id,&")
     .reply(
         200,
@@ -173,7 +173,7 @@ nock("http://localhost:8080/api/v1")
     );
 
 
-nock("http://localhost:8080/api/v1")
+nock(ELIDE_REST_API_URL)
     .get("/group?page[offset]=0&page[limit]=10&page[totals]&&filter=id=ini=(com.yahoo.elide)")
     .reply(
         200,
@@ -217,7 +217,7 @@ nock("http://localhost:8080/api/v1")
         }
     );
 
-nock("http://localhost:8080/api/v1")
+nock(ELIDE_REST_API_URL)
     .get("/group?page[offset]=0&page[limit]=10&page[totals]&sort=id,&filter=id=ini=(com.yahoo.elide)")
     .reply(
         200,

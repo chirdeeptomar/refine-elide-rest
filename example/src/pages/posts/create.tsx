@@ -1,21 +1,19 @@
 import {
     Create,
-    Form,
-    Input,
-    Select,
     useForm,
     useSelect,
-} from "@pankod/refine-antd";
-import { HttpError } from "@pankod/refine-core";
+} from "@refinedev/antd";
+import { HttpError } from "@refinedev/core";
+import { Form, Input, Select } from "antd";
 
-import { Category, Post } from "./../../interfaces";
+import { Category, Post } from "../../interfaces";
 
 
 export const PostCreate = () => {
     const { formProps, saveButtonProps } = useForm<Post, HttpError, { data: Post }>();
     const { selectProps: categorySelectProps } = useSelect<Category>({
         resource: "category",
-        optionLabel: "attributes.title",
+        optionLabel: (category) => category.attributes.title,
         optionValue: "id"
     });
 

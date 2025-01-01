@@ -4,8 +4,6 @@ import { ELIDE_REST_API_URL } from "../utils";
 import "./index.mock";
 
 
-axios.defaults.adapter = require("axios/lib/adapters/http");
-
 describe("update", () => {
     it("correct response", async () => {
         const response = await JsonServer(ELIDE_REST_API_URL, axios)

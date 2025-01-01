@@ -3,7 +3,6 @@ import JsonServer from "../../src/index";
 import { ELIDE_REST_API_URL } from "../utils";
 import "./index.mock";
 
-axios.defaults.adapter = require("axios/lib/adapters/http");
 
 describe("getList", () => {
     it("correct response", async () => {
@@ -19,7 +18,7 @@ describe("getList", () => {
             axios,
         ).getList({
             resource: "group",
-            sort: [
+            sorters: [
                 {
                     field: "id",
                     order: "asc",
@@ -38,7 +37,7 @@ describe("getList", () => {
             axios,
         ).getList({
             resource: "group",
-            sort: [
+            sorters: [
                 {
                     field: "id",
                     order: "desc",
@@ -83,7 +82,7 @@ describe("getList", () => {
                     value: ["com.yahoo.elide"],
                 },
             ],
-            sort: [
+            sorters: [
                 {
                     field: "id",
                     order: "asc",

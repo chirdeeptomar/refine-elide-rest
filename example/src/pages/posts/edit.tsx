@@ -1,22 +1,21 @@
 import {
-    useForm,
-    Form,
-    Input,
-    Select,
     Edit,
+    useForm,
     useSelect,
-} from "@pankod/refine-antd";
-import { HttpError } from "@pankod/refine-core";
-import { Category, Post } from "./../../interfaces";
+} from "@refinedev/antd";
+import { HttpError } from "@refinedev/core";
+import { Form, Input, Select } from "antd";
+
+import { Category, Post } from "../../interfaces";
 
 export const PostEdit: React.FC = () => {
-    const { formProps, saveButtonProps, queryResult } = useForm<{ data: Post }, HttpError, { data: Post }>();
+    const { formProps, saveButtonProps, query } = useForm<{ data: Post }, HttpError, { data: Post }>();
 
     const { selectProps: categorySelectProps } = useSelect<Category>({
         resource: "category",
-        optionLabel: "attributes.title",
+        optionLabel: (category) => category.attributes.title,
         optionValue: "id",
-        defaultValue: queryResult?.data?.data?.data.relationships?.category.data.id,
+        defaultValue: query?.data?.data?.data.relationships?.category.data.id,
     });
 
     return (
@@ -27,8 +26,8 @@ export const PostEdit: React.FC = () => {
                     formProps.onFinish &&
                     formProps.onFinish({
                         "data": {
-                            "id": queryResult?.data?.data.data.id,
-                            "type": queryResult?.data?.data.data.type!,
+                            "id": query?.data?.data.data.id,
+                            "type": query?.data?.data.data.type!,
                             "attributes": {
                                 "content": data.attributes.content,
                                 "title": data.attributes.title

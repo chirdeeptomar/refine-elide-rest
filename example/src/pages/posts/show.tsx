@@ -1,13 +1,14 @@
-import { useShow, useOne } from "@pankod/refine-core";
-import { Show, Typography } from "@pankod/refine-antd";
+import { useShow, useOne } from "@refinedev/core";
+import { Show } from "@refinedev/antd";
+import { Typography } from "antd";
 
-import { Post, Category, ApiResponse } from "./../../interfaces";
+import { Post, Category, ApiResponse } from "../../interfaces";
 
 const { Title, Text } = Typography;
 
 export const PostShow = () => {
-    const { queryResult } = useShow<ApiResponse<Post>>();
-    const { data, isLoading } = queryResult;
+    const { query } = useShow<ApiResponse<Post>>();
+    const { data, isLoading } = query;
     const record = data?.data;
 
     console.log(record)
